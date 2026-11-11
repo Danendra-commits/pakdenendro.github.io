@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#dcecff">
+  <title>A Little Message for You 💙</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
+
+    :root {
+      --navy: #24476f;
+      --blue: #477eb5;
+      --sky: #b9d8f5;
+      --pale: #edf6ff;
+      --ink: #29415b;
+      --muted: #71869d;
+      --white: rgba(255,255,255,.78);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; min-height: 100vh; overflow-x: hidden;
+      color: var(--ink); font-family: 'DM Sans', sans-serif;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(255,255,255,.95), transparent 28%),
+        radial-gradient(circle at 88% 80%, rgba(168,207,244,.6), transparent 32%),
+        linear-gradient(135deg, #eaf5ff 0%, #d9eaff 48%, #f5f8ff 100%);
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .ambient {
+      position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
+    }
+    .heart {
+      position: absolute; bottom: -50px; color: rgba(75,132,190,.35);
+      animation: floatUp linear infinite; user-select: none;
+      filter: drop-shadow(0 5px 10px rgba(71,126,181,.12));
+    }
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(0deg); opacity: 0; }
+      12% { opacity: .8; }
+      85% { opacity: .65; }
+      to { transform: translateY(-115vh) rotate(24deg); opacity: 0; }
+    }
+    .wrap {
+      position: relative; z-index: 1; min-height: 100vh; width: 100%;
+      display: grid; place-items: center; padding: 34px 18px;
+    }
+    .screen {
+      width: min(720px, 100%); text-align: center;
+      animation: appear .8s ease both;
+    }
+    .hidden { display: none !important; }
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(18px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border: 1px solid rgba(75,126,181,.2);
+      border-radius: 999px; color: #527ca6; background: rgba(255,255,255,.55);
+      font-size: .76rem; letter-spacing: .13em; text-transform: uppercase;
+    }
+    h1, h2 { font-family: 'Playfair Display', Georgia, serif; color: var(--navy); }
+    .opening h1 {
+      margin: 25px 0 12px; font-size: clamp(2.35rem, 7vw, 4.4rem);
+      line-height: 1.12; letter-spacing: -.04em;
+    }
+    .opening .sub { color: #637f9d; font-size: clamp(.98rem, 2.5vw, 1.12rem); }
+    .recipient {
+      margin: 25px auto 0; display: flex; flex-wrap: wrap; gap: 10px;
+      justify-content: center; align-items: center; color: #6d8298; font-size: .88rem;
+    }
+    .recipient input {
+      width: 125px; border: 1px solid rgba(79,128,177,.25); border-radius: 12px;
+      padding: 9px 12px; color: var(--navy); background: rgba(255,255,255,.65);
+      outline: none; text-align: center;
+    }
+    .recipient input:focus { border-color: #6d9dce; box-shadow: 0 0 0 3px rgba(109,157,206,.13); }
+    .main-heart {
+      width: 112px; height: 112px; display: grid; place-items: center;
+      margin: 34px auto 28px; border-radius: 36px;
+      background: linear-gradient(145deg, rgba(255,255,255,.95), rgba(199,224,249,.8));
+      box-shadow: 0 18px 55px rgba(63,112,162,.16), inset 0 1px 0 white;
+      font-size: 3.1rem; animation: pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100% { transform: translateY(0) rotate(-3deg); } 50% { transform: translateY(-7px) rotate(3deg); } }
+    .btn {
+      border: 0; border-radius: 999px; padding: 14px 25px; font-weight: 700;
+      color: white; background: linear-gradient(110deg, #477eb5, #6da5d8);
+      box-shadow: 0 9px 25px rgba(65,119,174,.25), 0 0 20px rgba(112,169,220,.22);
+      transition: transform .25s ease, box-shadow .25s ease, filter .25s ease;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 13px 30px rgba(65,119,174,.32), 0 0 28px rgba(112,169,220,.35); filter: brightness(1.04); }
+    .btn:active { transform: translateY(0) scale(.98); }
+    .small-note { margin-top: 18px; font-size: .8rem; color: #8195aa; }
+    .letter {
+      text-align: left; padding: clamp(23px, 5vw, 42px);
+      border: 1px solid rgba(255,255,255,.85); border-radius: 28px;
+      background: var(--white); backdrop-filter: blur(16px);
+      box-shadow: 0 22px 70px rgba(48,94,140,.13);
+    }
+    .letter-top { text-align: center; }
+    .letter-top .flower { font-size: 2.6rem; display: inline-block; animation: sway 3s ease-in-out infinite; }
+    @keyframes sway { 0%,100% { transform: rotate(-7deg); } 50% { transform: rotate(7deg); } }
+    .letter h2 { margin: 9px 0 6px; text-align: center; font-size: clamp(2rem, 6vw, 3.2rem); }
+    .date { text-align: center; color: #8a9db1; font-size: .8rem; margin-bottom: 28px; }
+    .message {
+      color: #405a75; font-size: .98rem; line-height: 1.9;
+      white-space: pre-wrap; overflow-wrap: anywhere; min-height: 120px;
+    }
+    .message .cursor {
+      display: inline-block; width: 2px; height: 1em; background: #5689bc;
+      vertical-align: -2px; margin-left: 2px; animation: blink .8s steps(2) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+    .message-actions { text-align: center; margin-top: 25px; }
+    .question-card {
+      width: min(620px, 100%); margin: auto; padding: 38px 24px;
+      border: 1px solid rgba(255,255,255,.9); border-radius: 28px;
+      background: rgba(255,255,255,.72); backdrop-filter: blur(16px);
+      box-shadow: 0 22px 70px rgba(48,94,140,.13);
+    }
+    .question-card .big-heart { font-size: 3rem; }
+    .question-card h2 { font-size: clamp(2rem, 6vw, 3rem); margin: 15px 0 8px; }
+    .question-card p { color: #71869d; line-height: 1.7; }
+    .answers { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 25px; }
+    .btn.secondary {
+      color: #4f7193; background: rgba(226,239,252,.85);
+      border: 1px solid rgba(91,139,186,.25); box-shadow: none;
+    }
+    .response {
+      margin: 25px auto 0; padding: 18px; border-radius: 18px;
+      background: rgba(225,240,255,.7); color: #42678c; line-height: 1.7;
+      animation: appear .5s ease both;
+    }
+    .signature { margin-top: 25px; text-align: right; color: #7890a9; font-size: .9rem; }
+    .music {
+      position: fixed; z-index: 5; top: 16px; right: 16px;
+      border: 1px solid rgba(83,132,181,.2); border-radius: 999px;
+      padding: 10px 14px; color: #52799f; background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px); font-size: .8rem;
+    }
+    .footer { margin-top: 24px; color: #91a4b8; font-size: .74rem; text-align: center; }
+    @media (max-width: 520px) {
+      .wrap { padding: 76px 15px 28px; }
+      .letter { border-radius: 22px; }
+      .message { font-size: .92rem; line-height: 1.8; }
+      .answers { flex-direction: column; }
+      .answers .btn { width: 100%; }
+      .recipient { gap: 7px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient" id="ambient" aria-hidden="true"></div>
+  <button class="music" id="musicToggle" type="button" aria-pressed="false">♫ Musik: OFF</button>
+
+  <main class="wrap">
+    <section class="screen opening" id="opening">
+      <span class="eyebrow">a little note from my heart 💙</span>
+      <div class="main-heart" aria-hidden="true">💙</div>
+      <h1>Hai, <span id="openingName">Zahwa</span>...<br>aku mau ngomong sesuatu.</h1>
+      <p class="sub">Ada sesuatu yang ingin aku sampaikan dari hati.</p>
+      <div class="recipient">
+        <label for="toName">Untuk</label>
+        <input id="toName" value="Zahwa" maxlength="28" aria-label="Nama penerima">
+        <span>—</span>
+        <label for="fromName">dari</label>
+        <input id="fromName" value="Danendra" maxlength="28" aria-label="Nama pengirim">
+      </div>
+      <div style="margin-top:28px">
+        <button class="btn" id="openMessage" type="button">Buka Pesan 💙</button>
+      </div>
+      <p class="small-note">dibuat dengan sedikit keberanian dan banyak rasa canggung hehe</p>
+    </section>
+
+    <section class="screen hidden" id="apology">
+      <article class="letter">
+        <div class="letter-top">
+          <span class="flower" aria-hidden="true">🪻</span>
+          <h2>I'm Really Sorry</h2>
+          <div class="date" id="dateLabel"></div>
+        </div>
+        <div class="message" id="typedMessage" aria-live="polite"></div>
+        <div class="message-actions hidden" id="continueWrap">
+          <button class="btn" id="toQuestion" type="button">Lanjut sedikit lagi 💙</button>
+        </div>
+        <div class="signature" id="signature"></div>
+      </article>
+      <div class="footer">no pressure, read it whenever you're ready.</div>
+    </section>
+
+    <section class="screen hidden" id="question">
+      <div class="question-card">
+        <div class="big-heart">💙</div>
+        <span class="eyebrow">one little question</span>
+        <h2>Would you forgive me?</h2>
+        <p>Jawab sejujurnya, ya. Apa pun jawabanmu, aku akan menghargainya.</p>
+        <div class="answers">
+          <button class="btn" id="forgive" type="button">I Forgive You ❤️</button>
+          <button class="btn secondary" id="time" type="button">I Need Some Time</button>
+        </div>
+        <div class="response hidden" id="response" role="status"></div>
+        <div class="footer">take your time. you don't owe me an instant answer.</div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const screens = ['opening', 'apology', 'question'];
+    const ambient = $('ambient');
+    let typingTimer;
+    let audioContext = null;
+    let musicOn = false;
+    let musicNodes = [];
+
+    // Floating hearts
+    const heartSymbols = ['♡', '♥', '✧', '💙'];
+    for (let i = 0; i < 22; i++) {
+      const heart = document.createElement('span');
+      heart.className = 'heart';
+      heart.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.fontSize = (12 + Math.random() * 18) + 'px';
+      heart.style.animationDuration = (12 + Math.random() * 15) + 's';
+      heart.style.animationDelay = (-Math.random() * 24) + 's';
+      ambient.appendChild(heart);
+    }
+
+    const apologyText = `HUMM, aku pasti masih ada salah yaa kak ke kamuu, karena aku juga masih agak ngganjel. KEK, EVEN BENER-BENER NGGANJEL WALAU UDAH DIMAAFIN AND KAMU ORANG E SANTAI MAYBE KAMU OVT-NAN (KAYA AKU JUGA).
+
+Aku iseng bikin web ini yaa. Awalnya karena gabut aja, tapi lama-kelamaan malah tak seriusin, LEH BIKIN PADAHAL PAKE AI JUGA SI AHAHAHAH.
+
+HMM, AKU BINGUNG MEH MULAI DARIMANA. JADI GINI KRONOLOGINÉ:
+
+Senin lalu pas meh pulang, aku nge-chat kamu karena mau bayar Gacoan yang kemarin Jumat ituloo. Kan aku sebangku sama Mas Wis, nah terus tanpa aku sadari tiba-tiba dia lihat sekilas dan kelihatan namanya (AND YANG KELIHATAN KI CUMA YANG WA-NE ITU TOK).
+
+WISNU: “Hayo hayo, meh ngopo kuii?”
+
+DANENDRA: “OPO TO NU, MUNG BAYAR GACOAN E SEK WINGI LO, NYO NEKRA PERCOYO.”
+
+Habis itu si Wisnu ki kayak mancing-mancing gitu, and TIBA-TIBA DIA NEKAT LO CEPLAS-CEPLOS KE GRUP TERUS NGOMONG “FOTBAR”. GAJE ITU 😭
+
+Yaa mungkin itu sedikit kronologine. Hmmm, after itu aku langsung ovt-nan sampai tidure jam 1 cuma gara-gara mikirin masalah e itu tadi, and kamuu ne.
+
+DARI LUBUK HATIKU YANG PALING DALAM, AKU BENER-BENER MINTA MAAF, ZAHWAAA. Aku nggak bermaksud bikin kamu nggak nyaman atau membuat keadaan jadi serba salah. Aku juga sadar mungkin caraku menghadapi semuanya masih kurang tepat.
+
+Dan aku sebenernya selalu ovt gara-gara respons kamu. Itu sebenernya kamu emang cuek atau dasar e kamu STECU KULKAS 1000 PINTU, COOL ABIEZ? 😭 AHAHAHA. Tapi serius, aku nggak mau nebak-nebak perasaanmu atau menuntut kamu buat selalu membalas seperti yang aku harapkan.
+
+Oh iya, aku buat web-e warna biru, katane kamu juga suka biru, AHAHAAHAH 💙
+
+Terus aku sengaja ngirim-e malem-malem, biar nanti senyum-senyum sendiri AHAHAHA. *Becanda ding kak, sumpil, anu iseng mwheheheh.*
+
+Dan satu gombalan receh:
+“Kamu tu pesulap, ya kak? Soalnya ngilang mulu tiap kali aku chat.” 😭
+
+Yaa mungkin itu sedikit klarifikasi dan pesan-pesannya. Aku nggak berharap kamu harus langsung memaafkan atau membalas apa pun sekarang. Kalau kamu masih butuh waktu, nggak apa-apa. Aku bakal menghargai itu.
+
+Moga kamu beneran maafin aku, Kak Zahwa. HMMM HUHUHUHUUUHUH MO SEDIH. Tapi yang paling penting, semoga setelah ini kita bisa sama-sama lebih nyaman.`;
+
+    function showScreen(id) {
+      screens.forEach(screen => $(screen).classList.add('hidden'));
+      $(id).classList.remove('hidden');
+      $(id).style.animation = 'none';
+      requestAnimationFrame(() => { $(id).style.animation = ''; });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function typeMessage(text, element, speed = 17) {
+      clearInterval(typingTimer);
+      element.textContent = '';
+      let index = 0;
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      element.appendChild(cursor);
+      typingTimer = setInterval(() => {
+        if (index >= text.length) {
+          clearInterval(typingTimer);
+          cursor.remove();
+          $('continueWrap').classList.remove('hidden');
+          $('signature').textContent = '— ' + ($('fromName').value.trim() || 'Danendra');
+          return;
+        }
+        cursor.insertAdjacentText('beforebegin', text.charAt(index));
+        index++;
+        if (text.charAt(index - 1) === '\n') window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      }, speed);
+    }
+
+    $('openMessage').addEventListener('click', () => {
+      $('dateLabel').textContent = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long' }).format(new Date());
+      $('signature').textContent = '';
+      $('continueWrap').classList.add('hidden');
+      showScreen('apology');
+      typeMessage(apologyText, $('typedMessage'));
+    });
+
+    $('toQuestion').addEventListener('click', () => showScreen('question'));
+
+    function showResponse(message, celebrate = false) {
+      const response = $('response');
+      response.textContent = message;
+      response.classList.remove('hidden');
+      if (celebrate) {
+        for (let i = 0; i < 18; i++) {
+          const burst = document.createElement('span');
+          burst.textContent = ['💙', '♡', '✨', '💫'][i % 4];
+          burst.style.cssText = `position:fixed;left:${15 + Math.random()*70}%;top:${25 + Math.random()*50}%;font-size:${18 + Math.random()*18}px;pointer-events:none;z-index:9;animation:burst 1.8s ease-out forwards;`;
+          document.body.appendChild(burst);
+          setTimeout(() => burst.remove(), 1900);
+        }
+      }
+    }
+    const burstStyle = document.createElement('style');
+    burstStyle.textContent = '@keyframes burst{0%{opacity:0;transform:translateY(15px) scale(.5)}20%{opacity:1}100%{opacity:0;transform:translateY(-100px) scale(1.3)}}';
+    document.head.appendChild(burstStyle);
+
+    $('forgive').addEventListener('click', () => {
+      showResponse("Thank you for giving me a chance. I'll do better. 💙", true);
+    });
+    $('time').addEventListener('click', () => {
+      showResponse("It's okay. I'll respect your time. Take all the time you need. 💙");
+    });
+
+    // Soft ambient music made with Web Audio (no external audio file needed).
+    async function startMusic() {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) {
+        $('musicToggle').textContent = '♫ Musik tidak didukung';
+        return;
+      }
+      audioContext = audioContext || new AudioCtx();
+      if (audioContext.state === 'suspended') await audioContext.resume();
+      const master = audioContext.createGain();
+      master.gain.value = 0.035;
+      master.connect(audioContext.destination);
+      const notes = [261.63, 329.63, 392.00, 329.63];
+      notes.forEach((frequency, index) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = frequency;
+        gain.gain.value = 0.18;
+        osc.connect(gain);
+        gain.connect(master);
+        osc.start();
+        musicNodes.push({ osc, gain });
+      });
+      // Gentle slow movement in the chord volume.
+      const lfo = audioContext.createOscillator();
+      const lfoGain = audioContext.createGain();
+      lfo.frequency.value = 0.12;
+      lfoGain.gain.value = 0.045;
+      lfo.connect(lfoGain);
+      lfoGain.connect(master.gain);
+      lfo.start();
+      musicNodes.push({ osc: lfo, gain: lfoGain });
+      musicNodes.push({ master });
+      musicOn = true;
+      $('musicToggle').textContent = '♫ Musik: ON';
+      $('musicToggle').setAttribute('aria-pressed', 'true');
+    }
+    function stopMusic() {
+      musicNodes.forEach(node => {
+        try { if (node.osc) node.osc.stop(); if (node.gain) node.gain.disconnect(); } catch (e) {}
+      });
+      musicNodes = [];
+      if (audioContext) {
+        try { audioContext.close(); } catch (e) {}
+        audioContext = null;
+      }
+      musicOn = false;
+      $('musicToggle').textContent = '♫ Musik: OFF';
+      $('musicToggle').setAttribute('aria-pressed', 'false');
+    }
+    $('musicToggle').addEventListener('click', () => {
+      if (musicOn) stopMusic();
+      else startMusic().catch(() => { $('musicToggle').textContent = '♫ Musik gagal diputar'; });
+    });
+  </script>
+</body>
+</html>
